@@ -6,53 +6,32 @@
 [![Test Coverage][coveralls-image]][coveralls-url]
 [![Gratipay][gratipay-image]][gratipay-url]
 
-## Installation
-
-```bash
-$ npm install express-session
-```
-
-## API
-
+## 安装
 ```js
-var session = require('express-session')
+ $ npm install express-session 
 ```
+## API
+```
+ var session = require('express-session')
+```
+#### session(配置)
+使用相应的配置来创建一个session中间件
 
-### session(options)
+**提示** 除了session ID之外,session的数据*不会*自己储存到cookie中,session的数据会被存在服务器端
 
-Create a session middleware with the given `options`.
+**警告** 在服务器端session故意默认储存在内存中,这不是为了生产环境而设计的.这样在大多数情况下会泄露内存,does not scale past a single process, and is meant for debugging and developing.
 
-**Note** Session data is _not_ saved in the cookie itself, just the session ID.
-Session data is stored server-side.
+更多的储存列表,详情请看: [compatible session stores](#compatible-session-stores)
+#### 配置
+`express-session`在配置对象中可以接受这些属性
+###### cookie
+设置cookie中的session ID.cookie更多不同参数的信息,请参考下面"cookie配置"小节,其默认的参数为`{ path: '/', httpOnly: true, secure: false, maxAge: null }`
+###### genid
+用来生成一个新的session ID的函数,提供一个返回通常用来做session ID的字符串的方法.当生成ID时,你如果想将某些值赋值给`req`,那么`req`作为该方法的第一个参数.
 
-**Warning** The default server-side session storage, `MemoryStore`, is _purposely_
-not designed for a production environment. It will leak memory under most
-conditions, does not scale past a single process, and is meant for debugging and
-developing.
+该默认值是一个使用`uid-safe`依赖库生成ID的函数.
 
-For a list of stores, see [compatible session stores](#compatible-session-stores).
-
-#### Options
-
-`express-session` accepts these properties in the options object.
-
-##### cookie
-
-Settings for the session ID cookie. See the "Cookie options" section below for
-more information on the different values.
-
-The default value is `{ path: '/', httpOnly: true, secure: false, maxAge: null }`.
-
-##### genid
-
-Function to call to generate a new session ID. Provide a function that returns
-a string that will be used as a session ID. The function is given `req` as the
-first argument if you want to use some value attached to `req` when generating
-the ID.
-
-The default value is a function which uses the `uid-safe` library to generate IDs.
-
-**NOTE** be careful to generate unique IDs so your sessions do not conflict.
+**提示** 注意生成唯一的ID,这样你的session才不会产生冲突
 
 ```js
 app.use(session({
@@ -61,6 +40,8 @@ app.use(session({
   },
   secret: 'keyboard cat'
 }))
+```
+
 ```
 
 ##### name
