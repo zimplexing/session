@@ -74,21 +74,11 @@ session ID的cookie名可以在设置在响应头中(可以在请求头中读取
 
 ##### saveUninitialized
 
-Forces a session that is "uninitialized" to be saved to the store. A session is
-uninitialized when it is new but not modified. Choosing `false` is useful for
-implementing login sessions, reducing server storage usage, or complying with
-laws that require permission before setting a cookie. Choosing `false` will also
-help with race conditions where a client makes multiple parallel requests
-without a session.
+强制将未初始化的session存储到内存中,未初始化的session是指一个全新的session且没有被修改过的.在使用登录session,减少服务器内存的使用,或者遵守在设置cookie前获取许可的规范时,将其设置为`false`是一个不错的选择.而且还能对客户端发送多个没有session请求的所形成竞争情况有所帮助.
 
-The default value is `true`, but using the default has been deprecated, as the
-default will change in the future. Please research into this setting and
-choose what is appropriate to your use-case.
+默认值是`true`,但是使用默认值已经被弃用,默认值在之后也将被修改,请研究这个设置之后,根据你的使用情况来选择
 
-**Note** if you are using Session in conjunction with PassportJS, Passport
-will add an empty Passport object to the session for use after a user is
-authenticated, which will be treated as a modification to the session, causing
-it to be saved.
+**提示**  如果你与PassportJS结合使用session的话,在用户认证之后,Passport会增加一个空的Passport对象在session中.这会默认认为session已经被修改,而造成这个session被存储的情况.
 
 ##### secret
 
@@ -486,7 +476,7 @@ and other multi-core embedded devices).
 
 ## Example
 
-A simple example using `express-session` to store page views for a user.
+一个使用`express-session`的简单例子,来演示用户存储一个页面视图.
 
 ```js
 var express = require('express')
