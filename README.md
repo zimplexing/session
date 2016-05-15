@@ -36,31 +36,24 @@ app.use(session({
 }))
 ```
 
-```
-
 ##### name
 
-The name of the session ID cookie to set in the response (and read from in the
-request).
+session ID的cookie名可以在设置在响应头中(可以在请求头中读取).
 
-The default value is `'connect.sid'`.
+默认值是 `'connect.sid'`.
 
-**Note** if you have multiple apps running on the same hostname (this is just
-the name, i.e. `localhost` or `127.0.0.1`; different schemes and ports do not
-name a different hostname), then you need to separate the session cookies from
-each other. The simplest method is to simply set different `name`s per app.
+**提示**如果你有多个app运行在同一个主机名上(只是主机名相同,比如`localhost`或者`127.0.0.1`;如果有不同的方案和端口的话,就没有必要命名不同的主机名了),这时你需要区分每一个session cookie了.最简单的方法是为每一个app设置一个不同的名称.
 
 ##### proxy
 
-Trust the reverse proxy when setting secure cookies (via the "X-Forwarded-Proto"
-header).
+当设置了安全的cookie后,可以充分相信反向代理(可以通过"X-Forwarded-Proto"头)
 
-The default value is `undefined`.
+默认值 `undefined`.
 
-  - `true` The "X-Forwarded-Proto" header will be used.
-  - `false` All headers are ignored and the connection is considered secure only
-    if there is a direct TLS/SSL connection.
-  - `undefined` Uses the "trust proxy" setting from express
+  - `true` 使用 "X-Forwarded-Proto" 头
+  - `false` 连接都只考虑安全性,所有的头都会被忽略
+    如果这是一个TLS/SSL连接的话
+  - `undefined` 使用express中设置的"trust proxy"
 
 ##### resave
 
