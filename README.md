@@ -57,12 +57,10 @@ session ID的cookie名可以在设置在响应头中(可以在请求头中读取
 
 ##### resave
 
-Forces the session to be saved back to the session store, even if the session
-was never modified during the request. Depending on your store this may be
-necessary, but it can also create race conditions where a client makes two
-parallel requests to your server and changes made to the session in one
-request may get overwritten when the other request ends, even if it made no
-changes (this behavior also depends on what store you're using).
+Forces the session to be saved back to the session store, even if the sessionwas never modified during the request. Depending on your store this may benecessary, but it can also create race conditions where a client makes twoparallel requests to your server and changes made to the session in onerequest may get overwritten when the other request ends, even if it made nochanges (this behavior also depends on what store you're using).
+
+即使在请求中session没有进行任何修改,也会强制session重新存储一遍.
+可能关键取决于你的存储,但是它会产生一个竞争的情况,当一个客户端向你的服务器发送两条并行的请求时,一个请求中session发生改变时,当另一个请求结束时,这个session可能会被重写,即使这个session没有做任何修改,也可能会被重写(这种情况也取决于你使用的存储).
 
 The default value is `true`, but using the default has been deprecated,
 as the default will change in the future. Please research into this setting
