@@ -57,33 +57,20 @@ session ID的cookie名可以在设置在响应头中(可以在请求头中读取
 
 ##### resave
 
-Forces the session to be saved back to the session store, even if the sessionwas never modified during the request. Depending on your store this may benecessary, but it can also create race conditions where a client makes twoparallel requests to your server and changes made to the session in onerequest may get overwritten when the other request ends, even if it made nochanges (this behavior also depends on what store you're using).
-
 即使在请求中session没有进行任何修改,也会强制session重新存储一遍.
-可能关键取决于你的存储,但是它会产生一个竞争的情况,当一个客户端向你的服务器发送两条并行的请求时,一个请求中session发生改变时,当另一个请求结束时,这个session可能会被重写,即使这个session没有做任何修改,也可能会被重写(这种情况也取决于你使用的存储).
+取决于你的存储这是非常有必要的,但是它会产生一个竞争的情况,当一个客户端向你的服务器发送两条并行的请求时,一个请求中session发生改变时,当另一个请求结束时,这个session可能会被重写,即使这个session没有做任何修改,也可能会被重写(这种情况也取决于你使用的存储).
 
-The default value is `true`, but using the default has been deprecated,
-as the default will change in the future. Please research into this setting
-and choose what is appropriate to your use-case. Typically, you'll want
-`false`.
+默认值是 `true`,但是这个默认值已经被弃用了,这个默认值在之后会被修改.请在研究这个设置后,根据你的使用情况来选择.通常情况下,你会选择`false`.
 
-How do I know if this is necessary for my store? The best way to know is to
-check with your store if it implements the `touch` method. If it does, then
-you can safely set `resave: false`. If it does not implement the `touch`
-method and your store sets an expiration date on stored sessions, then you
-likely need `resave: true`.
+那我怎么知道,这个是否对我的存储有必要呢?最好的方式是检查你的存储是否有`touch`这个方法.如果有,你可以安全设置`resave:false`.如果没有`touch`这个方法,你的储存会在被存储的session上设置一个过期时间,然后你可能需要`resave:true`.
 
 ##### rolling
 
-Force a session identifier cookie to be set on every response. The expiration
-is reset to the original [`maxAge`](#cookiemaxage), resetting the expiration
-countdown.
+会在每一个响应上,强制session设置一个cookie识别码.过期时间会被重置为original [`maxAge`](#cookiemaxage),并且重置倒计时.
 
-The default value is `false`.
+默认值是 `false`.
 
-**Note** When this option is set to `true` but the `saveUninitialized` option is
-set to `false`, the cookie will not be set on a response with an uninitialized
-session.
+**提示** 当这个被设置为`true`,但是`saveUninitialized`设置为`false`时,一个响应的session没有被初始化,cookie是不会被设置的.
 
 ##### saveUninitialized
 
